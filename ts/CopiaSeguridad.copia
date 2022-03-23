@@ -1,0 +1,222 @@
+function mario(){
+   var nav:any = document.createElement("img");
+   nav.src = "imgs/nave.png";
+   nav.style.width = "200px";
+   nav.id = "navi";
+   nav.style.position = "absolute";
+   nav.left = "100px";
+   // nave.className = "nave";
+   
+
+   var div:any = document.getElementById("nave");
+   div.appendChild(nav);
+
+
+  
+}
+var loc:any = 1;
+function boss(){
+   var boss:any = document.createElement("img");
+   boss.src = "imgs/boss.png";
+   boss.style.width = "400px";
+   boss.id = "boss_img";
+   boss.style.position = "absolute";
+  
+   boss.style.top = "140px";
+   boss.style.animationName = "movimiento";
+   boss.style.animationDuration = "10s";
+   boss.style.animationIterationCount = "infinite";
+
+   var b:any = localStorage.setItem("jefe", boss.offsetLeft);
+   var div:any = document.getElementById("boss");
+   div.appendChild(boss);
+   
+   function laser_boss(){
+      let posicion:any = document.getElementById('boss_img');
+      var rect = posicion.getBoundingClientRect();
+     
+      localStorage.setItem("posicion_laser", rect.left);
+      var laser_malo:any = document.createElement("img");
+      laser_malo.src = "imgs/laser.png";
+      laser_malo.style.width = "30px";
+      laser_malo.id = "laser_malo";
+      laser_malo.style.position = "absolute";
+      laser_malo.style.left = parseInt(rect.left) - (-92) + 'px';
+      laser_malo.style.top = parseInt(rect.top) + (400) + 'px';
+      laser_malo.style.animationName = "mov_laser";
+      laser_malo.style.animationDuration = "2s";
+      laser_malo.style.animationFillMode = "forwards";
+      div.appendChild(laser_malo);
+      console.log("Laser Jefe_izq: "+rect.left+"Laser Jefe_der"+rect.right);
+      
+      
+      
+      
+      var pos_nav:any = localStorage.getItem("posicion_izq");
+      console.log("Posicion Nave: "+Math.round(pos_nav / 10) * 10);
+
+
+      if(pos_nav > Math.round(rect.left) - 200 && pos_nav < Math.round(rect.right) - 200){
+         console.log("DENTRO");
+         var vida_nave:any = document.getElementById("vida2");
+         con2 =  con2 - 20;
+         vida_nave.style.paddingLeft = con2 + "px";
+         var p:any = document.createElement("p");
+         var num_vida:any = document.createTextNode(con2);
+         vida_nave.appendChild(con2);
+         if(con2 == 0){
+            alert("GAMEOVER");
+         }
+      }
+      
+   }setInterval(laser_boss,1000);
+   
+}
+
+
+
+var bo:any = document.getElementById("boss");
+
+
+
+
+
+let nave:any = document.getElementById('nave');
+let move:any = 100;
+
+window.addEventListener('load', () =>{
+   nave.style.position = 'absolute';
+   nave.style.left = "1200px";
+   nave.style.top = "800px";
+
+});
+
+window.addEventListener('keyup', (e) =>{
+   var na:any = document.getElementById("navi");
+   switch(e.key){
+      case 'ArrowLeft':
+         nave.style.left = parseInt(nave.style.left) - move + 'px';
+        
+         na.src = "imgs/nave-right.png";
+      break;
+      case 'ArrowRight':
+         nave.style.left = parseInt(nave.style.left) + move + 'px';
+         na.src = "imgs/nave-left.png";
+      break;
+      case 'ArrowUp':
+         nave.style.top = parseInt(nave.style.top) - move + 'px';
+         na.src = "imgs/nave.png";
+      break;
+      case 'ArrowDown':
+         nave.style.top = parseInt(nave.style.top) + move + 'px';
+         na.src = "imgs/nave.png";
+      break;
+   }
+
+});
+var a:any = 0;
+var con:any = 500;
+var con2:any = 500;
+// vida.style.paddingLeft = "500px";
+document.body.onkeyup = function(s){
+   let nave:any = document.getElementById('espacio');
+   let navea:any = document.getElementById('nave');
+   if(s.keyCode == 32){
+      //LASER DE LA IZQUIERDA
+       var laser_izq:any = document.createElement("img");
+       laser_izq.src = "imgs/disparo.png";
+       laser_izq.style.width = "17px";
+       laser_izq.style.position = "absolute";
+       laser_izq.style.left = parseInt(navea.style.left) - (-25) + 'px';
+       laser_izq.style.top = parseInt(navea.style.top) + 'px';
+       laser_izq.style.animationName = "mov_laser_izq";
+       laser_izq.style.animationDuration = "1s";
+       laser_izq.style.animationFillMode = "forwards";
+       laser_izq.id = "las_i";
+       nave.appendChild(laser_izq);
+
+       //LASER DE LA DERECHA
+       var laser_der:any = document.createElement("img");
+       laser_der.src = "imgs/disparo.png";
+       laser_der.style.width = "17px";
+       laser_der.style.position = "absolute";
+       laser_der.style.left = parseInt(navea.style.left) - (-160) + 'px';
+       laser_der.style.top = parseInt(navea.style.top) + 'px';
+       laser_der.style.animationName = "mov_laser_izq";
+       laser_der.style.animationDuration = "1s";
+       laser_der.style.animationFillMode = "forwards";
+       laser_der.id = "las_d";
+
+       nave.appendChild(laser_der);
+
+       var laser_cen:any = document.createElement("img");
+       laser_cen.src = "imgs/disparo_b.png";
+       laser_cen.style.width = "17px";
+       laser_cen.style.position = "absolute";
+       laser_cen.style.left = parseInt(navea.style.left) - (-92) + 'px';
+       laser_cen.style.top = parseInt(navea.style.top) + (-70) + 'px';
+       laser_cen.style.animationName = "mov_laser_izq";
+       laser_cen.style.animationDuration = "1s";
+       laser_cen.style.animationFillMode = "forwards";
+       laser_cen.id = "las_c";
+
+       nave.appendChild(laser_cen);
+
+      
+
+      
+
+     var pos:any = localStorage.setItem('posicion_izq', laser_izq.offsetLeft);
+     var pos2:any = localStorage.setItem('posicion_der', laser_der.offsetLeft);
+
+     
+     let posicion:any = document.getElementById('boss_img');
+     var rect = posicion.getBoundingClientRect();
+     
+
+     let posa:any = localStorage.setItem('posJefe', posicion.offsetLeft);
+
+
+     var posicion_disparo_izquierda:any = localStorage.getItem('posicion_izq');
+     var posicion_disparo_derecha:any = localStorage.getItem('posicion_der');
+     var posicion_jefe:any = localStorage.getItem('posJefe');
+     
+
+     
+      // console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+      var rect2 = laser_der.getBoundingClientRect();
+      
+      
+      
+      // console.log(rect2.top, rect2.right, rect2.bottom, rect2.left);
+
+      var rect3 = laser_izq.getBoundingClientRect();
+
+      var rect4 = laser_cen.getBoundingClientRect();
+ 
+
+      if(Math.round(rect2.right / 100) * 100 == Math.round(rect.right / 100) * 100 ||Math.round(rect3.right / 100) * 100 == Math.round(rect.right / 100) * 100 || Math.round(rect4.right / 100) * 100 == Math.round(rect.right / 100) * 100){
+         // console.log(a+=1);
+      con = con - 5;
+      var vida:any = document.getElementById("vida");
+      // vida.style.paddingLeft = vida.style.paddingLeft - 10 + "px";
+      // console.log(vida.style.paddingLeft);
+      vida.style.paddingLeft = con + 'px';
+      if(con == 0){
+         alert("WIN!!!");
+         location.reload();
+      }
+        
+        
+        
+      }
+
+      
+   
+      
+   }
+   
+}
+
+var las:any = document.getElementById("las_d");
